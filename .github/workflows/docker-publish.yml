@@ -53,9 +53,9 @@ jobs:
       # Step 3: Build the Docker image
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} .
+          docker build -t ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} .
 
       # Step 4: Push Docker image to GHCR
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          docker push  ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
