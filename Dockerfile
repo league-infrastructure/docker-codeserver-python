@@ -24,8 +24,9 @@ RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requ
 
 EXPOSE 8080
 
-#RUN mkdir /workspace
-#RUN git clone https://github.com/league-curriculum/Python-Apprentice /workspace
+# Clone the curriculum into the workspace
+RUN mkdir /workspace
+RUN git clone https://github.com/league-curriculum/Python-Apprentice /workspace
 
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 

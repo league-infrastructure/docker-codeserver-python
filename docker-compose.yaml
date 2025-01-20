@@ -3,10 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        VERSION: ${VERSION:-0.0.1}
+
     container_name: code-server
-    image: ghcr.io/league-infrastructure/docker-codeserver-python:${VERSION:-latest}
+    image: ghcr.io/league-infrastructure/docker-codeserver-python:${VERSION:dev}
     ports:
       - 6080
       - 8082:8082
