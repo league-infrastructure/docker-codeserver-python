@@ -41,19 +41,21 @@ jobs:
       - name: Set Image Tag
         id: image_tag
         run: |
-          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
-            echo "TAG=${{ github.ref }}" | sed 's|refs/tags/||'
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            TAG=$(echo "${GITHUB_REF}" | sed 's|refs/tags/||')
           else
-            echo "TAG=latest"
+            TAG="latest"
           fi
+          echo "TAG=${TAG}" >> $GITHUB_ENV
         shell: bash
+
 
       # Step 3: Build the Docker image
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ env.IMAGE_NAME }}:${{ steps.image_tag.outputs.TAG }} .
+          docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} .
 
       # Step 4: Push Docker image to GHCR
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ env.IMAGE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
