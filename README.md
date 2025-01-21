@@ -2,18 +2,13 @@
 
 docker run -d \
   --rm \
-  --name code-server \
   -p 8080:8080 \
   -v "$(pwd):/workspace" \
   -e PASSWORD=code4life \
   -e DISPLAY=:0 \
   -e VNC_URL= \
-  --label "caddy=codeserver.do.jointheleague.org" \
-  --label "caddy.reverse_proxy={{upstreams 8080}}" \
-  --network x11 -network caddy \
-  --build-arg context=. \
-  --build-arg dockerfile=Dockerfile \
-  docker-codeserver-python-devcontainer 
+  --network x11 --network caddy \
+  ghcr.io/league-infrastructure/league-infrastructure/docker-codeserver-python:latest
 
 
 docker run \

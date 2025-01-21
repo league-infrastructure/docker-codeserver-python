@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
     net-tools \
     supervisor \
+    oneko \
     imagemagick && \
     rm -rf /var/lib/apt/lists/*
 
