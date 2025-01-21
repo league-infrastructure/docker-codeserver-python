@@ -1,43 +1,45 @@
 FROM mcr.microsoft.com/devcontainers/python:3.12-bookworm
 
-ENV VNC_RESOLUTION=600x600x16
-ENV PASSWORD=code4life
+ENV PASSWORD=code4life \
+DISPLAY_WIDTH=600 \
+DISPLAY_HEIGHT=600
 
-
-# Local install of the VNC / NoVNC server
-# COPY install.sh /tmp/install-vnc.sh
-# installs /usr/local/share/desktop-init.sh
-# RUN chmod 775 /tmp/install-vnc.sh 
-# RUN /tmp/install-vnc.sh
+RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     x11-apps \
     git \
+    bash \
+    net-tools \
+    supervisor \
     imagemagick && \
     rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt /tmp/pip-tmp/
-RUN pip3 install --upgrade pip
-RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
-    && rm -rf /tmp/pip-tmp
 
+COPY ./app /app
+
+RUN pip3 install --upgrade pip
+RUN pip3 --disable-pip-version-check --no-cache-dir install -r /app/requirements.txt 
 
 EXPOSE 8080
 
-# Clone the curriculum into the workspace
+RUN mkdir /app/run
+RUN chown -R vscode /app/run
+
 RUN mkdir /workspace
-RUN git clone https://github.com/league-curriculum/Python-Apprentice /workspace
-
-RUN curl -fsSL https://code-server.dev/install.sh | sh
-
-# Install extensions
-COPY install-extensions.sh /tmp/install-extensions.sh
-RUN chmod 775 /tmp/install-extensions.sh
-RUN /tmp/install-extensions.sh
+RUN chown -R vscode /workspace
 
 USER vscode
 
+WORKDIR /app/run
+
+RUN /app/setup.sh
+RUN /app/install-extensions.sh
+
 RUN git config --global pull.rebase true
+RUN git config --global user.email "student@jointheleague.org"
+RUN git config --global user.name "League Student"
 
 
-CMD ["code-server",  "--disable-workspace-trust",  "--bind-addr", "0.0.0.0:8080", "/workspace"]
+ENTRYPOINT ["/app/entrypoint.sh"]
+CMD ["/app/command.sh"]

@@ -5,34 +5,29 @@ services:
       dockerfile: Dockerfile
 
     container_name: code-server
-    image: ghcr.io/league-infrastructure/docker-codeserver-python:${VERSION:dev}
+    
     ports:
-      - 6080
-      - 8082:8082
+      - 8080:8080
+
     volumes:
       - .:/workspace
 
     environment:
-      - PASSWORD=code4life # Optional: Secure access
+      - PASSWORD=code4life 
       - VSCODE_PROXY_URI=./proxy/{{port}}
-      - DISPLAY=novnc:0.0
-    command: >
-      code-server --disable-workspace-trust  --bind-addr 0.0.0.0:8082 /workspace
+      - DISPLAY=:0
+      - VNC_URL=
+
+    labels:
+      caddy: codeserver.do.jointheleague.org
+      caddy.reverse_proxy: "{{upstreams 8080}}"
 
     networks:
       - x11
-
-  novnc:  
-    image: ghcr.io/league-infrastructure/docker-novnc/docker-novnc:latest
-    environment:
-      # Adjust to your screen size
-      - DISPLAY_WIDTH=600
-      - DISPLAY_HEIGHT=600
-      - RUN_XTERM=no
-    ports:
-      - "8080:8080"
-    networks:
-      - x11
+      - caddy
 
 networks:
   x11:
+    internal: true
+  caddy:
+    external: true

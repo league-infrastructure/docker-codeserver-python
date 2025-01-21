@@ -14,3 +14,5 @@ for extension in "${extensions[@]}"; do
     code-server --install-extension "$extension" 
 done
 
+wget https://github.com/league-infrastructure/league-vscode-ext/releases/download/0.0.1/jtl-vscode-0.0.1.vsix
+code-server --install-extension jtl-vscode-0.0.1.vsix
