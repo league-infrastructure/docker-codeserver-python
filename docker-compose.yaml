@@ -9,18 +9,19 @@ services:
     ports:
       - 8080:8080
 
-    volumes:
-      - .:/workspace
+    #volumes:
+    #  - /tmp/workspace:/workspace
 
     environment:
       - PASSWORD=code4life 
       - VSCODE_PROXY_URI=./proxy/{{port}}
-      - DISPLAY=:0
-      - VNC_URL=
-      - KST_REPORTING_URL="http://localhost:8095",
-      - KST_CONTAINER_ID="container-123",
-			- KST_REPORT_RATE="1",
-			- KST_DEBUG=
+      - DISPLAY=novnc:0
+      - VNC_URL=https://codeserver-vnc.do.jointheleague.org/vnc/
+      - KST_REPORTING_URL=http://localhost:8095
+      - KST_CONTAINER_ID=container-123
+      - KST_REPORT_RATE=1
+      - KST_DEBUG=
+      - WORKSPACE_FOLDER=/workspace/Python-Games
 
     labels:
       caddy: codeserver.do.jointheleague.org
@@ -29,6 +30,30 @@ services:
     networks:
       - x11
       - caddy
+
+  novnc:  
+
+    image: ghcr.io/league-infrastructure/novnc-service:v0.1.1
+    environment:
+      # Adjust to your screen size
+      - DISPLAY_WIDTH=600
+      - DISPLAY_HEIGHT=600
+      - RUN_XTERM=no
+
+    ports:
+      - 6080 
+      - 5900
+    
+    labels:
+      caddy: codeserver-vnc.do.jointheleague.org
+      caddy.@ws.0_header: Connection *Upgrade*
+      caddy.@ws.1_header: Upgrade websocket
+      caddy.0_reverse_proxy: "@ws {{upstreams 6080}}"
+      caddy.1_reverse_proxy: "{{upstreams 6080}}"
+
+    networks:
+      - x11
+      - caddy 
 
 networks:
   x11:

@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/python:3.12-bookworm
 
 ENV PASSWORD=code4life \
+WORKSPACE_FOLDER=/workspace \
 DISPLAY_WIDTH=600 \
 DISPLAY_HEIGHT=600
 
@@ -16,7 +17,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     imagemagick && \
     rm -rf /var/lib/apt/lists/*
 
-
 COPY ./app /app
 
 RUN pip3 install --upgrade pip
@@ -28,6 +28,10 @@ RUN mkdir /app/run
 RUN chown -R vscode /app/run
 
 RUN mkdir /workspace
+WORKDIR /workspace
+RUN git clone https://github.com/league-curriculum/Python-Apprentice
+RUN git clone https://github.com/league-curriculum/Python-Games
+
 RUN chown -R vscode /workspace
 
 USER vscode
@@ -41,6 +45,11 @@ RUN git config --global pull.rebase true
 RUN git config --global user.email "student@jointheleague.org"
 RUN git config --global user.name "League Student"
 
+WORKDIR /workspace
 
 ENTRYPOINT ["/app/entrypoint.sh"]
-CMD ["/app/command.sh"]
+
+#CMD ["code-server", "--disable-workspace-trust", "--bind-addr", "0.0.0.0:8080", "/workspace"]
+
+# Doing it this way to get the expansion of WORKSPACE_FOLDER
+CMD ["/bin/sh", "-c", "code-server --disable-workspace-trust --bind-addr 0.0.0.0:8080 $WORKSPACE_FOLDER"]
