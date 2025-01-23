@@ -54,6 +54,5 @@ WORKDIR /workspace
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 
-CMD ["code-server", "--disable-workspace-trust", 
-"--bind-addr", "0.0.0.0:8080", "/workspace/Python-Apprentice"]
+CMD ["code-server", "--disable-workspace-trust", "--bind-addr", "0.0.0.0:8080", "/workspace/Python-Apprentice"]
 
