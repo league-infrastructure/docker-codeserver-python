@@ -30,7 +30,7 @@ RUN chown -R vscode /app/run
 RUN mkdir /workspace
 WORKDIR /workspace
 RUN git clone https://github.com/league-curriculum/Python-Apprentice
-RUN git clone https://github.com/league-curriculum/Python-Games
+#RUN git clone https://github.com/league-curriculum/Python-Games
 
 RUN chown -R vscode /workspace
 

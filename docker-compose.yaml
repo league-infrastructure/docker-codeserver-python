@@ -21,7 +21,7 @@ services:
       - KST_CONTAINER_ID=container-123
       - KST_REPORT_RATE=1
       - KST_DEBUG=1
-      - WORKSPACE_FOLDER=/workspace/Python-Games
+      - WORKSPACE_FOLDER=/workspace/Python-Apprentice
 
     labels:
       caddy: codeserver.do.jointheleague.org
