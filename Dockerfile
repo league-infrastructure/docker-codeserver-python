@@ -30,7 +30,6 @@ RUN chown -R vscode /app/run
 RUN mkdir /workspace
 WORKDIR /workspace
 RUN git clone https://github.com/league-curriculum/Python-Apprentice
-#RUN git clone https://github.com/league-curriculum/Python-Games
 
 RUN chown -R vscode /workspace
 
@@ -55,7 +54,6 @@ WORKDIR /workspace
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 
-#CMD ["code-server", "--disable-workspace-trust", "--bind-addr", "0.0.0.0:8080", "/workspace"]
+CMD ["code-server", "--disable-workspace-trust", "--bind-addr", "0.0.0.0:8080", "/workspace/Python-Apprentice
+"]
 
-# Doing it this way to get the expansion of WORKSPACE_FOLDER
-CMD ["/bin/sh", "-c", "code-server --disable-workspace-trust --bind-addr 0.0.0.0:8080 $WORKSPACE_FOLDER"]
