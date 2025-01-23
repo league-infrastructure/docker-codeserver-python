@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/python:3.12-bookworm
 
 ENV PASSWORD=code4life \
-WORKSPACE_FOLDER=/workspace \
+WORKSPACE_FOLDER=/workspace/Python-Apprentice \
 DISPLAY_WIDTH=600 \
 DISPLAY_HEIGHT=600
 
