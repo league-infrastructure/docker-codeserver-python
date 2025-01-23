@@ -39,6 +39,7 @@ WORKDIR /app/run
 
 RUN /app/setup.sh
 
+# Install VSCode extensions
 RUN code-server --install-extension "ms-python.python"
 RUN code-server --install-extension "ms-python.autopep8"
 RUN code-server --install-extension "ms-python.debugpy"
@@ -46,9 +47,22 @@ RUN code-server --install-extension "ms-python.isort"
 RUN code-server --install-extension "ms-toolsai.jupyter"
 RUN code-server --install-extension /app/vsc/jtl-vscode-0.2.1.vsix
 
+# To keep git from complaining 
 RUN git config --global pull.rebase true
 RUN git config --global user.email "student@jointheleague.org"
 RUN git config --global user.name "League Student"
+
+WORKDIR /workspace/Python-Apprentice
+# Clean out distracting files we no longer need. 
+RUN rm -rf .devcontainer
+RUN rm -rf .github
+RUN rm -rf .lib
+RUN rm -rf requirements.txt
+RUN rm -rf LICENSE
+RUN mv lessons/* .
+RUN rm -rf lessons
+RUN git add -A
+RUN git commit -m "codeserver init"
 
 WORKDIR /workspace
 
