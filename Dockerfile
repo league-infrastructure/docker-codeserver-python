@@ -39,7 +39,13 @@ USER vscode
 WORKDIR /app/run
 
 RUN /app/setup.sh
-RUN /app/install-extensions.sh
+
+RUN code-server --install-extension "ms-python.python"
+RUN code-server --install-extension "ms-python.autopep8"
+RUN code-server --install-extension "ms-python.debugpy"
+RUN code-server --install-extension "ms-python.isort"
+RUN code-server --install-extension "ms-toolsai.jupyter"
+RUN code-server --install-extension /app/vsc/jtl-vscode-0.2.1.vsix
 
 RUN git config --global pull.rebase true
 RUN git config --global user.email "student@jointheleague.org"
