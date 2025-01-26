@@ -17,7 +17,7 @@ services:
       - VSCODE_PROXY_URI=./proxy/{{port}}
       - DISPLAY=novnc:0
       - VNC_URL=https://codeserver-vnc.do.jointheleague.org/
-      - KST_REPORTING_URL=http://localhost:8095
+      - KST_REPORTING_URL=http://code-server/telem
       - KST_CONTAINER_ID=container-123
       - KST_REPORT_RATE=1
       - KST_DEBUG=1
