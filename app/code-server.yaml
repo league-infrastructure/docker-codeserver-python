@@ -1,0 +1,6 @@
+bind-addr: 0.0.0.0:8080
+disable-workspace-trust: true
+disable-getting-started-override: true
+auth: none
+welcome-text: "Welcome to the Foo"
+app-name: "League Code Server"

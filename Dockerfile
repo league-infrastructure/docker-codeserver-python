@@ -29,7 +29,6 @@ RUN chown -R vscode /app/run
 
 RUN mkdir /workspace
 WORKDIR /workspace
-RUN git clone https://github.com/league-curriculum/Python-Apprentice
 
 RUN chown -R vscode /workspace
 
@@ -52,6 +51,7 @@ RUN git config --global pull.rebase true
 RUN git config --global user.email "student@jointheleague.org"
 RUN git config --global user.name "League Student"
 
+RUN cd /workspace && git clone https://github.com/league-curriculum/Python-Apprentice
 WORKDIR /workspace/Python-Apprentice
 # Clean out distracting files we no longer need. 
 RUN rm -rf .devcontainer
@@ -68,5 +68,5 @@ WORKDIR /workspace
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 
-CMD ["code-server", "--disable-workspace-trust", "--bind-addr", "0.0.0.0:8080", "/workspace/Python-Apprentice"]
+CMD ["code-server", "--config", "/app/code-server.yaml", "/workspace/Python-Apprentice"]
 
