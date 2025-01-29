@@ -7,7 +7,9 @@ services:
     container_name: code-server
     
     ports:
-      - 8080:8080
+      - 8080
+      - 6080 
+      - 5900
 
     #volumes:
     #  - /Users/eric/proj/league-projects/league-vscode-ext:/workspace
@@ -25,35 +27,18 @@ services:
 
     labels:
       caddy: codeserver.do.jointheleague.org
-      caddy.reverse_proxy: "{{upstreams 8080}}"
+
+      caddy.@ws.0_header: Connection *Upgrade*
+      caddy.@ws.1_header: Upgrade websocket
+      caddy.0_reverse_proxy: "@ws {{upstreams 6080}}"
+      caddy.1_reverse_proxy: /cs* "{{upstreams 8080}}"
+      caddy.2_reverse_proxy: "{{upstreams 6080}}"
 
     networks:
       - x11
       - caddy
 
-  novnc:  
 
-    image: ghcr.io/league-infrastructure/novnc-service:v0.1.3
-    environment:
-      # Adjust to your screen size
-      - DISPLAY_WIDTH=600
-      - DISPLAY_HEIGHT=600
-      - RUN_XTERM=no
-
-    ports:
-      - 6080 
-      - 5900
-    
-    labels:
-      caddy: codeserver-vnc.do.jointheleague.org
-      caddy.@ws.0_header: Connection *Upgrade*
-      caddy.@ws.1_header: Upgrade websocket
-      caddy.0_reverse_proxy: "@ws {{upstreams 6080}}"
-      caddy.1_reverse_proxy: "{{upstreams 6080}}"
-
-    networks:
-      - x11
-      - caddy 
 
 networks:
   x11:

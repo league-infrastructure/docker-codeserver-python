@@ -1,9 +1,16 @@
 FROM mcr.microsoft.com/devcontainers/python:3.12-bookworm
 
 ENV PASSWORD=code4life \
-WORKSPACE_FOLDER=/workspace/Python-Apprentice \
-DISPLAY_WIDTH=600 \
-DISPLAY_HEIGHT=600
+    WORKSPACE_FOLDER=/workspace/Python-Apprentice \
+    DISPLAY_WIDTH=600 \
+    DISPLAY_HEIGHT=600 \
+    DEBIAN_FRONTEND=noninteractive \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    DISPLAY=:0.0 
+
+
 
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
@@ -14,15 +21,38 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     net-tools \
     supervisor \
     oneko \
+    build-essential \
+    cron \
+    tzdata \
+    procps \
+    tini \
+    fluxbox \
+    novnc \
+    x11vnc \
+    xterm \
+    xvfb \
     imagemagick && \
     rm -rf /var/lib/apt/lists/*
 
+ENV TZ=America/Los_Angeles
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+
 COPY ./app /app
+
+# Copy the crontab file into the appropriate location
+RUN mv /app/crontab /etc/crontab
+RUN crontab /etc/crontab
 
 RUN pip3 install --upgrade pip
 RUN pip3 --disable-pip-version-check --no-cache-dir install -r /app/requirements.txt 
 
+# Make novnc run from the index.html
+RUN cp /usr/share/novnc/vnc_lite.html  /usr/share/novnc/index.html
+
 EXPOSE 8080
+EXPOSE 6080
 
 RUN mkdir /app/run
 RUN chown -R vscode /app/run
@@ -65,8 +95,8 @@ RUN git add -A
 RUN git commit -m "codeserver init"
 
 WORKDIR /workspace
+USER root
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 
-CMD ["code-server", "--config", "/app/code-server.yaml", "/workspace/Python-Apprentice"]
-
+CMD ["/usr/bin/supervisord", "-c", "/app/supervisord.conf"]
