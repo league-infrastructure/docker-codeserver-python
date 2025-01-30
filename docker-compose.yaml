@@ -1,3 +1,6 @@
+
+
+
 services:
   devcontainer:
     build:
@@ -7,38 +10,37 @@ services:
     container_name: code-server
     
     ports:
-      - 8080
-      - 6080 
-      - 5900
+      - "8080:8080"
+      - "6080:6080"
+      - "5900:5900"
 
     #volumes:
     #  - /Users/eric/proj/league-projects/league-vscode-ext:/workspace
 
     environment:
-      - PASSWORD=code4life 
-      - VSCODE_PROXY_URI=./proxy/{{port}}
-      - DISPLAY=novnc:0
-      - VNC_URL=https://codeserver-vnc.do.jointheleague.org/
       - KST_REPORTING_URL=http://code-server/telem
-      - KST_CONTAINER_ID=container-123
-      - KST_REPORT_RATE=1
-      - KST_DEBUG=1
       - WORKSPACE_FOLDER=/workspace/Python-Apprentice
+      - VNC_URL=https://codespace.doswarm.jointheleague.org/vnc/
 
     labels:
-      caddy: codeserver.do.jointheleague.org
-
+      caddy: codespace.doswarm.jointheleague.org
+      # WebSocket handler for /websockify
       caddy.@ws.0_header: Connection *Upgrade*
       caddy.@ws.1_header: Upgrade websocket
-      caddy.0_reverse_proxy: "@ws {{upstreams 6080}}"
-      caddy.1_reverse_proxy: /cs* "{{upstreams 8080}}"
-      caddy.2_reverse_proxy: "{{upstreams 6080}}"
+      # Make websockify route first
+      caddy.0_route.handle: /websockify*
+      caddy.0_route.handle.reverse_proxy: "@ws {{upstreams 6080}}"
+      # VNC route second
+      caddy.1_route.handle: /vnc/*
+      caddy.1_route.handle_path: /vnc/*
+      caddy.1_route.handle_path.reverse_proxy: "{{upstreams 6080}}"
+      # Catch-all route last
+      caddy.2_route.handle: /*
+      caddy.2_route.handle.reverse_proxy: "{{upstreams 8080}}"
 
     networks:
       - x11
       - caddy
-
-
 
 networks:
   x11:

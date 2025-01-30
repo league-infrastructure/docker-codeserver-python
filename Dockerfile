@@ -6,11 +6,12 @@ ENV PASSWORD=code4life \
     DISPLAY_HEIGHT=600 \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
+    HOME=/workspace \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=C.UTF-8 \
-    DISPLAY=:0.0 
-
-
+    DISPLAY=:0.0 \
+    KST_REPORT_RATE=30 \
+    KST_DEBUG=0
 
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
@@ -18,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     x11-apps \
     git \
     bash \
-    net-tools \
+    net-tools  netcat-traditional nmap \
     supervisor \
     oneko \
     build-essential \
@@ -29,7 +30,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fluxbox \
     novnc \
     x11vnc \
-    xterm \
     xvfb \
     imagemagick && \
     rm -rf /var/lib/apt/lists/*
@@ -57,7 +57,7 @@ EXPOSE 6080
 RUN mkdir /app/run
 RUN chown -R vscode /app/run
 
-RUN mkdir /workspace
+
 WORKDIR /workspace
 
 RUN chown -R vscode /workspace
@@ -69,34 +69,30 @@ WORKDIR /app/run
 RUN /app/setup.sh
 
 # Install VSCode extensions
-RUN code-server --install-extension "ms-python.python"
-RUN code-server --install-extension "ms-python.autopep8"
-RUN code-server --install-extension "ms-python.debugpy"
-RUN code-server --install-extension "ms-python.isort"
-RUN code-server --install-extension "ms-toolsai.jupyter"
-RUN code-server --install-extension /app/vsc/jtl-vscode-0.2.1.vsix
+RUN code-server --install-extension "ms-python.python" \
+    --install-extension "ms-python.autopep8" \
+    --install-extension "ms-python.debugpy" \
+    --install-extension "ms-python.isort" \
+    --install-extension "ms-toolsai.jupyter" \
+    --install-extension /app/vsc/jtl-vscode-0.2.1.vsix
 
 # To keep git from complaining 
-RUN git config --global pull.rebase true
-RUN git config --global user.email "student@jointheleague.org"
-RUN git config --global user.name "League Student"
+RUN git config --global pull.rebase true && \
+    git config --global user.email "student@jointheleague.org" && \
+    git config --global user.name "League Student"
 
 RUN cd /workspace && git clone https://github.com/league-curriculum/Python-Apprentice
 WORKDIR /workspace/Python-Apprentice
 # Clean out distracting files we no longer need. 
-RUN rm -rf .devcontainer
-RUN rm -rf .github
-RUN rm -rf .lib
-RUN rm -rf requirements.txt
-RUN rm -rf LICENSE
-RUN mv lessons/* .
-RUN rm -rf lessons
-RUN git add -A
-RUN git commit -m "codeserver init"
+RUN rm -rf .devcontainer .github .lib requirements.txt LICENSE lessons && \
+    mv lessons/* . && \
+    rm -rf lessons && \
+    git add -A && \
+    git commit -m "codeserver init"
 
 WORKDIR /workspace
 USER root
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/tini", "--"]
 
 CMD ["/usr/bin/supervisord", "-c", "/app/supervisord.conf"]
