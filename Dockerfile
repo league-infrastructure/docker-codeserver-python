@@ -83,8 +83,9 @@ RUN git config --global pull.rebase true && \
 
 RUN cd /workspace && git clone https://github.com/league-curriculum/Python-Apprentice
 WORKDIR /workspace/Python-Apprentice
+
 # Clean out distracting files we no longer need. 
-RUN rm -rf .devcontainer .github .lib requirements.txt LICENSE lessons && \
+RUN rm -rf .devcontainer .github .lib requirements.txt LICENSE  && \
     mv lessons/* . && \
     rm -rf lessons && \
     git add -A && \
