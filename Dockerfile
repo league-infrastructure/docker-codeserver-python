@@ -1,5 +1,8 @@
 FROM mcr.microsoft.com/devcontainers/python:3.12-bookworm
 
+LABEL org.opencontainers.image.description="Code-server container for the Python Apprentice curriculum, with a VNC server and a web-based IDE"
+LABEL org.opencontainers.image.source="https://github.com/league-infrastructure/docker-codeserver-python.git"
+
 ENV PASSWORD=code4life \
     WORKSPACE_FOLDER=/workspace/Python-Apprentice \
     DISPLAY_WIDTH=600 \
