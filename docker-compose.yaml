@@ -20,8 +20,8 @@ services:
     environment:
       #- KST_REPORTING_URL=http://code-server/telem
       - KST_REPORTING_URL=http://192.168.1.49:5000/telem
-      - KST_REPORT_RATE=1
-      - WORKSPACE_FOLDER=/workspace/Python-Apprentice
+      - KST_REPORT_RATE=300
+      - WORKSPACE_FOLDER=/workspace/
       - VNC_URL=https://codespace.doswarm.jointheleague.org/vnc/
 
     labels:

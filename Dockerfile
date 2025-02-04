@@ -84,15 +84,15 @@ RUN git config --global pull.rebase true && \
     git config --global user.email "student@jointheleague.org" && \
     git config --global user.name "League Student"
 
-RUN cd /workspace && git clone https://github.com/league-curriculum/Python-Apprentice
-WORKDIR /workspace/Python-Apprentice
+#RUN cd /workspace && git clone https://github.com/league-curriculum/Python-Apprentice
+#WORKDIR /workspace/Python-Apprentice
 
 # Clean out distracting files we no longer need. 
-RUN rm -rf .devcontainer .github .lib requirements.txt LICENSE  && \
-    mv lessons/* . && \
-    rm -rf lessons && \
-    git add -A && \
-    git commit -m "codeserver init"
+#RUN rm -rf .devcontainer .github .lib requirements.txt LICENSE  && \
+#    mv lessons/* . && \
+#    rm -rf lessons && \
+#    git add -A && \
+#    git commit -m "codeserver init"
 
 WORKDIR /workspace
 USER root
