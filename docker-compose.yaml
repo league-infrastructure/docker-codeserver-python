@@ -22,7 +22,6 @@ services:
       - KST_REPORTING_URL=http://192.168.1.49:5000/telem
       - KST_REPORT_RATE=300
       - WORKSPACE_FOLDER=/workspace/
-      - VNC_URL=https://codespace.doswarm.jointheleague.org/vnc/
 
     labels:
       caddy: codespace.doswarm.jointheleague.org
