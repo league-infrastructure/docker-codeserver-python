@@ -41,6 +41,14 @@ ENV TZ=America/Los_Angeles
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+RUN code-server --extensions-dir /app/extensions \
+--install-extension "ms-python.python" \
+--install-extension "ms-python.autopep8" \
+--install-extension "ms-python.debugpy" \
+--install-extension "ms-python.isort" \
+--install-extension "ms-toolsai.jupyter" \
+--install-extension /app/vsc/jtl-vscode-0.2.2.vsix
+
 
 COPY ./app /app
 
