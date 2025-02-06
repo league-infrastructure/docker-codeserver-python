@@ -2,9 +2,10 @@ name: Build and Push to GHCR
 
 on:
   push:
-    branches:
-      - master
-  # Publish semver tags as releases.
+    #branches:
+    #  - master
+    
+    # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "master" ]
@@ -37,25 +38,26 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 2.5: Determine Image Tag
       - name: Set Image Tag
         id: image_tag
         run: |
-          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-            TAG=$(echo "${GITHUB_REF}" | sed 's|refs/tags/||')
-          else
-            TAG="latest"
-          fi
+          TAG=$(echo "${GITHUB_REF}" | sed 's|refs/tags/||')
           echo "TAG=${TAG}" >> $GITHUB_ENV
+          echo "LATEST_TAG=true" >> $GITHUB_ENV
         shell: bash
-
 
       # Step 3: Build the Docker image
       - name: Build Docker image
         run: |
           docker build -t ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} .
 
-      # Step 4: Push Docker image to GHCR
+      - name: Tag image as latest
+
+        run: |
+          docker tag ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} \
+                     ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+
       - name: Push Docker image
         run: |
-          docker push  ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          docker push ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          docker push ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
