@@ -4,7 +4,7 @@ LABEL org.opencontainers.image.description="Code-server container for the Python
 LABEL org.opencontainers.image.source="https://github.com/league-infrastructure/docker-codeserver-python.git"
 
 ENV PASSWORD=code4life \
-    WORKSPACE_FOLDER=/workspace/Python-Apprentice \
+    WORKSPACE_FOLDER=/workspace/ \
     DISPLAY_WIDTH=600 \
     DISPLAY_HEIGHT=600 \
     DEBIAN_FRONTEND=noninteractive \

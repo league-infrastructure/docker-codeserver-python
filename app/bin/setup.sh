@@ -7,6 +7,14 @@ echo "Extra setup ... "
 
 cd /workspace
 
+# The code.json file is used to configure the Coder IDE, but it
+# will also set the default workspace, which we don't want.
+# Maybe would be better to edit out the default workspace part?
+if [ -f /workspace/coder.json ]; then
+    echo "Removing /workspace/coder.json ..."
+    rm /workspace/coder.json
+fi
+
 if [ -z "$INITIAL_GIT_REPO" ]; then
     echo "INITIAL_GIT_REPO is not set; not cloning anything"
 else
