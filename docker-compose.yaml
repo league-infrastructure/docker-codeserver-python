@@ -12,7 +12,7 @@ services:
     ports:
       - "8080:8080"
       - "6080:6080"
-      - "5900:5900"
+      #- "5900:5900"
 
     #volumes:
     #  - /Users/eric/proj/league-projects/league-vscode-ext:/workspace
@@ -23,6 +23,7 @@ services:
       - KST_REPORT_RATE=30
       - WORKSPACE_FOLDER=/workspace/
       - INITIAL_GIT_REPO=https://github.com/league-curriculum/Python-Apprentice
+
     labels:
       caddy: codespace.doswarm.jointheleague.org
       # WebSocket handler for /websockify
@@ -40,7 +41,6 @@ services:
       caddy.2_route.handle.reverse_proxy: "{{upstreams 8080}}"
 
     networks:
-      - x11
       - caddy
 
 networks:
