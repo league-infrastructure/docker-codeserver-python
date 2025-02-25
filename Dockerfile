@@ -49,7 +49,7 @@ RUN code-server --extensions-dir /app/extensions \
 --install-extension "ms-python.debugpy" \
 --install-extension "ms-python.isort" \
 --install-extension "ms-toolsai.jupyter" \
---install-extension /app/vsc/jtl-vscode-0.4.1.vsix
+--install-extension /app/vsc/jtl-vscode-0.5.2.vsix
 
 
 

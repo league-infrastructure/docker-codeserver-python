@@ -21,8 +21,10 @@ services:
       #- KST_REPORTING_URL=http://code-server/telem
       - KST_REPORTING_URL=http://192.168.1.49:5000/telem
       - KST_REPORT_RATE=30
-      - WORKSPACE_FOLDER=/workspace/
+      - WORKSPACE_FOLDER=/workspace/Python-Apprentice
+      - VNC_URL=https://jointheleague.org
       - INITIAL_GIT_REPO=https://github.com/league-curriculum/Python-Apprentice
+      - JTL_SYLLABUS=/workspace/Python-Apprentice/lessons/.jtl/syllabus-1h.yaml
 
     labels:
       caddy: codespace.doswarm.jointheleague.org
