@@ -49,7 +49,7 @@ RUN code-server --extensions-dir /app/extensions \
 --install-extension "ms-python.debugpy" \
 --install-extension "ms-python.isort" \
 --install-extension "ms-toolsai.jupyter" \
---install-extension /app/extensions/jtl-vscode-0.5.3.vsix
+--install-extension /app/extensions/jtl-vscode-0.5.4.vsix
 
 
 RUN chown -R vscode /app/extensions

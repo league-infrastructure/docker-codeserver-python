@@ -12,8 +12,6 @@ cd /workspace
 
 mkdir /workspace/User
 
-ls -la 
-
 # The code.json file is used to configure the Coder IDE, but it
 # will also set the default workspace, which we don't want.
 # Maybe would be better to edit out the default workspace part?
@@ -52,13 +50,17 @@ clone_and_setup_repo() {
         SETUP_SCRIPT="${target_dir}/${SETUP_SCRIPT}"
     fi
 
-    setup_script="${target_dir}/.devcontainer/jtl-setup.sh"
+    cd $target_dir
 
-    if [ -f "$setup_script" ]; then
-        echo "Running setup script from cloned repo ${target_dir} ..."
-        cd $target_dir
-        /bin/bash "$setup_script" "$target_dir"
-    fi
+    
+    python -mvenv .venv && source .venv/bin/activate && python -mpip install --upgrade pip && pip install -r requirements.txt
+
+    setup_script=".devcontainer/jtl-setup.sh"
+
+    #if [ -f "$setup_script" ]; then
+    #    echo "Running setup script from cloned repo ${target_dir} ..."
+    #    /bin/bash "$setup_script" "$target_dir"
+    #fi
 }
 
 if [ -z "$INITIAL_GIT_REPO" ]; then
