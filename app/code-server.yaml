@@ -5,4 +5,4 @@ auth: none
 welcome-text: "Welcome to the League Codeserver"
 app-name: "League Code Server"
 extensions-dir: /app/extensions
-user-data-dir: /workspace/.local/share/code-server
+user-data-dir: /home/vscode/.local/share/code-server
