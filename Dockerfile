@@ -5,6 +5,7 @@ LABEL org.opencontainers.image.source="https://github.com/league-infrastructure/
 
 ENV PASSWORD=code4life \
     WORKSPACE_FOLDER=/workspace/ \
+    HOME=/home/vscode \
     DISPLAY_WIDTH=600 \
     DISPLAY_HEIGHT=600 \
     DEBIAN_FRONTEND=noninteractive \
@@ -42,18 +43,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY ./app /app
 
-RUN code-server --extensions-dir /app/extensions \
---install-extension /app/extensions/jtl-vscode-0.5.6.vsix \
---install-extension "ms-python.python" 
 
-# --install-extension "ms-python.autopep8" \
-# --install-extension "ms-python.debugpy" \
-# --install-extension "ms-python.isort" \
-# --install-extension "ms-toolsai.jupyter" \
-
-
-
-RUN chown -R vscode /app/extensions
 
 # Copy the crontab file into the appropriate location
 RUN mv /app/crontab /etc/crontab
@@ -71,12 +61,23 @@ EXPOSE 6080
 RUN mkdir /app/run
 RUN chown -R vscode /app/run
 
-
-WORKDIR /workspace
-
+RUN mkdir /workspace
 RUN chown -R vscode /workspace
+RUN chown -R vscode /app/extensions
 
 USER vscode
+
+RUN code-server --extensions-dir /app/extensions \
+--install-extension /app/extensions/jtl-vscode-0.5.6.vsix \
+--install-extension "ms-python.python" 
+
+# --install-extension "ms-python.autopep8" \
+# --install-extension "ms-python.debugpy" \
+# --install-extension "ms-python.isort" \
+# --install-extension "ms-toolsai.jupyter" \
+
+
+
 
 WORKDIR /app/run
 
