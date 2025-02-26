@@ -49,10 +49,10 @@ RUN code-server --extensions-dir /app/extensions \
 --install-extension "ms-python.debugpy" \
 --install-extension "ms-python.isort" \
 --install-extension "ms-toolsai.jupyter" \
---install-extension /app/extensions/jtl-vscode-0.5.2.vsix
+--install-extension /app/extensions/jtl-vscode-0.5.3.vsix
 
 
-
+RUN chown -R vscode /app/extensions
 
 # Copy the crontab file into the appropriate location
 RUN mv /app/crontab /etc/crontab

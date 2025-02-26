@@ -1,0 +1,44 @@
+{
+    "editor.minimap.enabled": false,
+    "editor.tabCompletion": "on",
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 120,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "files.eol": "\n",
+    "notebook.output.wordWrap": true,
+    "security.workspace.trust.enabled": false,
+    "terminal.integrated.sendKeybindingsToShell": true,
+    "workbench.activityBar.location": "bottom",
+    "workbench.startupEditor": "readme",
+    "workbench.statusBar.visible": false,
+    "editor.cursorBlinking": "solid",
+    "editor.smoothScrolling": false,
+    "editor.fontLigatures": false,
+    "editor.formatOnSave": true,
+    "workbench.tips.enabled": false,
+    "extensions.showRecommendationsOnlyOnDemand": true,
+
+    // Disable Copilot Controls
+    "editor.inlineSuggest.enabled": false,
+    "github.copilot.inlineSuggest.enable": false,
+    "github.copilot.editor.enableAutoCompletion": false,
+    "github.copilot.enable": false,
+
+    // Disable Command Center (removes top command bar)
+    "window.commandCenter": false,
+
+    // Disable Layout Controls (removes top-right UI buttons)
+    "workbench.layoutControl.enabled": false,
+
+    // Disable "SPlit Right"
+    "workbench.editor.splitInGroupLayout": "vertical",
+    "workbench.editor.splitLocation": "down",
+
+    // Single Tab Mode
+    "workbench.editor.enablePreview": true,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.closeEmptyGroups": true,
+    //"workbench.editor.limit.enabled": true,
+    //"workbench.editor.limit.value": 1
+}
