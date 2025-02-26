@@ -39,6 +39,11 @@
     "workbench.editor.enablePreview": true,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.editor.closeEmptyGroups": true,
-    //"workbench.editor.limit.enabled": true,
-    //"workbench.editor.limit.value": 1
+
+    "remote.autoForwardPorts": false,
+    "remote.portsAttributes": {
+        "*": {
+            "onAutoForward": "ignore"
+        }
+    }
 }

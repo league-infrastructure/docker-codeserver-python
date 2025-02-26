@@ -9,7 +9,6 @@ ENV PASSWORD=code4life \
     DISPLAY_HEIGHT=600 \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
-    HOME=/workspace \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=C.UTF-8 \
     DISPLAY=:0.0 \
@@ -44,12 +43,14 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 COPY ./app /app
 
 RUN code-server --extensions-dir /app/extensions \
---install-extension "ms-python.python" \
---install-extension "ms-python.autopep8" \
---install-extension "ms-python.debugpy" \
---install-extension "ms-python.isort" \
---install-extension "ms-toolsai.jupyter" \
---install-extension /app/extensions/jtl-vscode-0.5.4.vsix
+--install-extension /app/extensions/jtl-vscode-0.5.6.vsix \
+--install-extension "ms-python.python" 
+
+# --install-extension "ms-python.autopep8" \
+# --install-extension "ms-python.debugpy" \
+# --install-extension "ms-python.isort" \
+# --install-extension "ms-toolsai.jupyter" \
+
 
 
 RUN chown -R vscode /app/extensions
@@ -84,6 +85,10 @@ WORKDIR /app/run
 RUN git config --global pull.rebase true && \
     git config --global user.email "student@jointheleague.org" && \
     git config --global user.name "League Student"
+
+
+# Newline after the long PS1
+RUN echo 'export PS1="${PS1}\n$ "' >> ~/.bashrc
 
 
 WORKDIR /workspace
