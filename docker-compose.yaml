@@ -1,5 +1,6 @@
 
 
+
 services:
   devcontainer:
     build:
@@ -21,7 +22,7 @@ services:
       - KST_REPORTING_URL=http://192.168.1.49:5000/telem
       - KST_REPORT_RATE=30
       - WORKSPACE_FOLDER=/workspace/Python-Apprentice
-      - VNC_URL=http://localhost:6080
+      - VNC_URL=https://codespace.doswarm.jointheleague.org/vnc/
       - INITIAL_GIT_REPO=https://github.com/league-curriculum/Python-Apprentice
       - JTL_SYLLABUS=/workspace/Python-Apprentice/lessons/.jtl/syllabus-1h.yaml
 
