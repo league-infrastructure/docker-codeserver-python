@@ -31,6 +31,7 @@ services:
       # WebSocket handler for /websockify
       caddy.@ws.0_header: Connection *Upgrade*
       caddy.@ws.1_header: Upgrade websocket
+
       # Make websockify route first
       caddy.0_route.handle: /websockify*
       caddy.0_route.handle.reverse_proxy: "@ws {{upstreams 6080}}"
