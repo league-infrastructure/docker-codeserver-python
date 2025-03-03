@@ -68,7 +68,7 @@ RUN chown -R vscode /app/extensions
 USER vscode
 
 RUN code-server --extensions-dir /app/extensions \
---install-extension /app/extensions/jtl-vscode-0.5.8.vsix \
+--install-extension /app/extensions/jtl-vscode-0.5.6.vsix \
 --install-extension "ms-python.python" 
 
 # --install-extension "ms-python.autopep8" \
