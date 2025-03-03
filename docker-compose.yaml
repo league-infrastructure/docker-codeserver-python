@@ -1,6 +1,3 @@
-
-
-
 services:
   devcontainer:
     build:
@@ -28,6 +25,7 @@ services:
 
     labels:
       caddy: codespace.doswarm.jointheleague.org
+
       # WebSocket handler for /websockify
       caddy.@ws.0_header: Connection *Upgrade*
       caddy.@ws.1_header: Upgrade websocket
@@ -42,6 +40,11 @@ services:
       # Catch-all route last
       caddy.2_route.handle: /*
       caddy.2_route.handle.reverse_proxy: "{{upstreams 8080}}"
+
+      # Basic auth:
+      #caddy.2_route.handle.basic_auth: admin
+      caddy.basic_auth.admin: $$2a$$14$$dvvmGyTMamr5SONPH0vbweeD2Ng767yBIOCtr1.BQ17PK7sU/0C5W
+      
 
     networks:
       - caddy
