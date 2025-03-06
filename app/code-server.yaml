@@ -1,4 +1,4 @@
-bind-addr: 0.0.0.0:8080
+bind-addr: 0.0.0.0:80
 disable-workspace-trust: true
 disable-getting-started-override: true
 auth: none

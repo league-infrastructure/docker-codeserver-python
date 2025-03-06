@@ -39,7 +39,7 @@ services:
       caddy.1_route.handle_path.reverse_proxy: "{{upstreams 6080}}"
       # Catch-all route last
       caddy.2_route.handle: /*
-      caddy.2_route.handle.reverse_proxy: "{{upstreams 8080}}"
+      caddy.2_route.handle.reverse_proxy: "{{upstreams 80}}"
 
       # Basic auth:
       #caddy.2_route.handle.basic_auth: admin
