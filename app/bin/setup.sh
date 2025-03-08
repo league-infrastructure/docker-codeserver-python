@@ -3,7 +3,6 @@
 # Post startup installation script, which is run from 
 # supervisord after the container has started.
 
-
 USER_DATA_DIR="$HOME/.local/share/code-server" # must match code-server.yaml
 
 echo "Setup.sh: Extra setup  "
@@ -21,7 +20,8 @@ if [ -f /workspace/coder.json ]; then
 fi
 
 
-# Install the user configuration
+# Install the user configuration. Note that this is the User configuration
+# and that the repo may also have a custom workspace configuration
 
 SETTINGS_SRC="/app/vsc/settings.json"
 USER_SETTINGS="$USER_DATA_DIR/User/settings.json"
@@ -33,7 +33,6 @@ else
     cp  $SETTINGS_SRC $USER_SETTINGS
 fi
 
-
 clone_and_setup_repo() {
     target_dir=$(basename "$INITIAL_GIT_REPO" .git)
 
@@ -44,23 +43,29 @@ clone_and_setup_repo() {
 
     git clone --depth 1 "$INITIAL_GIT_REPO" $target_dir
 
+    cd $target_dir
+
+    # Install Python requirements, which can either be in the root, or in the .jtl directory
+    python -mvenv .venv && source .venv/bin/activate && python -mpip install --upgrade pip 
+    
+    for req_file in "requirements.txt" ".jtl/requirements.txt"; do
+        if [ -f "$req_file" ]; then
+            echo "Installing requirements from $req_file ..."
+            source .venv/bin/activate && pip install -r "$req_file"
+        fi
+    done
+
+    # Find and run the repo setup script. 
     if [ -z "$SETUP_SCRIPT" ]; then
-        SETUP_SCRIPT="${target_dir}/.devcontainer/jtl-setup.sh"
+        SETUP_SCRIPT="${target_dir}/.jtl/setup.sh"
     else
         SETUP_SCRIPT="${target_dir}/${SETUP_SCRIPT}"
     fi
 
-    cd $target_dir
-
-    
-    python -mvenv .venv && source .venv/bin/activate && python -mpip install --upgrade pip && pip install -r requirements.txt
-
-    setup_script=".devcontainer/jtl-setup.sh"
-
-    #if [ -f "$setup_script" ]; then
-    #    echo "Running setup script from cloned repo ${target_dir} ..."
-    #    /bin/bash "$setup_script" "$target_dir"
-    #fi
+    if [ -f "$SETUP_SCRIPT" ]; then
+        echo "Running setup script from cloned repo ${target_dir} ..."
+        /bin/bash "$SETUP_SCRIPT" "$target_dir"
+    fi
 }
 
 if [ -z "$INITIAL_GIT_REPO" ]; then
