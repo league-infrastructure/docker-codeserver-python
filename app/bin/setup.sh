@@ -19,7 +19,6 @@ if [ -f /workspace/coder.json ]; then
     rm /workspace/coder.json
 fi
 
-
 # Install the user configuration. Note that this is the User configuration
 # and that the repo may also have a custom workspace configuration
 
@@ -44,16 +43,6 @@ clone_and_setup_repo() {
     git clone --depth 1 "$INITIAL_GIT_REPO" $target_dir
 
     cd $target_dir
-
-    # Install Python requirements, which can either be in the root, or in the .jtl directory
-    python -mvenv .venv && source .venv/bin/activate && python -mpip install --upgrade pip 
-    
-    for req_file in "requirements.txt" ".jtl/requirements.txt"; do
-        if [ -f "$req_file" ]; then
-            echo "Installing requirements from $req_file ..."
-            source .venv/bin/activate && pip install -r "$req_file"
-        fi
-    done
 
     # Find and run the repo setup script. 
     if [ -z "$SETUP_SCRIPT" ]; then
