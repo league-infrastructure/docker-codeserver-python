@@ -1,7 +1,7 @@
 
-.PHONY: setup build publish compile
+.PHONY: build push ver
 
-VERSION := "1.20250309.1"
+VERSION := "1.20250309.2"
 
 ver:
 	@echo $(VERSION)
@@ -12,5 +12,6 @@ push:
 	git tag v$(VERSION) 
 	git push --tags
 
-
+build:
+	docker compose build --no-cache 
 
