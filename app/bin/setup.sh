@@ -36,7 +36,11 @@ clone_and_setup_repo() {
     target_dir=$(basename "$INITIAL_GIT_REPO" .git)
 
     if [ -d "$target_dir" ]; then
-        echo "Repository already exists."
+        echo "Repository already exists, pulling"
+
+        cd $target_dir
+        #git pull -X ours
+
         return 1
     fi
 

@@ -1,7 +1,7 @@
 
 .PHONY: build push ver
 
-VERSION := "1.20250309.4"
+VERSION := "1.20250309.5"
 
 ver:
 	@echo $(VERSION)
