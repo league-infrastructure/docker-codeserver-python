@@ -3,7 +3,8 @@ FROM mcr.microsoft.com/devcontainers/python:3.12-bookworm
 LABEL org.opencontainers.image.description="Code-server container for the Python Apprentice curriculum, with a VNC server and a web-based IDE"
 LABEL org.opencontainers.image.source="https://github.com/league-infrastructure/docker-codeserver-python.git"
 
-ENV PASSWORD=code4life \
+ENV LEAGUE_CODESERVER=1 \
+    PASSWORD=code4life \
     WORKSPACE_FOLDER=/workspace/ \
     HOME=/home/vscode \
     DISPLAY_WIDTH=600 \
@@ -68,7 +69,7 @@ RUN chown -R vscode /app/extensions
 USER vscode
 
 RUN code-server --extensions-dir /app/extensions \
---install-extension /app/extensions/jtl-vscode-0.5.12.vsix \
+--install-extension /app/extensions/jtl-vscode-1.20250309.1.vsix \
 --install-extension "ms-python.python" 
 
 # --install-extension "ms-python.autopep8" \

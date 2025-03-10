@@ -1,7 +1,7 @@
 
 .PHONY: setup build publish compile
 
-VERSION := "1.20250308.2"
+VERSION := "1.20250309.1"
 
 ver:
 	@echo $(VERSION)
