@@ -71,7 +71,7 @@ RUN mkdir -p /home/vscode/.cache && chown -R vscode /home/vscode/.cache
 USER vscode
 
 RUN code-server --extensions-dir /app/extensions \
---install-extension /app/extensions/jtl-vscode-1.20250310.4.vsix \
+--install-extension /app/extensions/jtl-vscode-1.20250310.5.vsix \
 --install-extension "ms-python.python"  
 
 # --install-extension "ms-python.autopep8" \
