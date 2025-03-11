@@ -65,6 +65,8 @@ RUN chown -R vscode /app/run
 RUN mkdir /workspace
 RUN chown -R vscode /workspace
 RUN chown -R vscode /app/extensions
+RUN mkdir -p /home/vscode/.cache && chown -R vscode /home/vscode/.cache
+
 
 USER vscode
 
