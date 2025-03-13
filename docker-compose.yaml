@@ -7,7 +7,7 @@ services:
     container_name: code-server
     
     ports:
-      - "8080:8080"
+      - "8080:80"
       - "6080:6080"
       #- "5900:5900"
 
@@ -17,11 +17,14 @@ services:
     environment:
       #- KST_REPORTING_URL=http://code-server/telem
       - KST_REPORTING_URL=http://192.168.1.49:5000/telem
-      - KST_REPORT_RATE=30
+      - KST_REPORT_RATE=5
       - WORKSPACE_FOLDER=/workspace/Python-Apprentice
-      - VNC_URL=https://codespace.doswarm.jointheleague.org/vnc/
-      - INITIAL_GIT_REPO=https://github.com/league-curriculum/Python-Apprentice
-      - JTL_SYLLABUS=/workspace/Python-Apprentice/lessons/.jtl/syllabus-1h.yaml
+      - JTL_VNC_URL=https://codespace.doswarm.jointheleague.org/vnc/
+      - JTL_REPO=https://github.com/league-curriculum/Python-Apprentice
+      - JTL_SYLLABUS=/workspace/Python-Apprentice/.jtl/syllabus.yaml
+      - JTL_USERNAME=test_user
+      - JTL_IMAGE_URI=docker-image-uri
+      - JTL_CLASS_ID=1
 
     labels:
       caddy: codespace.doswarm.jointheleague.org

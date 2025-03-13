@@ -33,7 +33,7 @@ else
 fi
 
 clone_and_setup_repo() {
-    target_dir=$(basename "$INITIAL_GIT_REPO" .git)
+    target_dir=$(basename "$JTL_REPO" .git)
 
     if [ -d "$target_dir" ]; then
         echo "Repository already exists, pulling"
@@ -44,7 +44,7 @@ clone_and_setup_repo() {
         return 1
     fi
 
-    git clone --depth 1 "$INITIAL_GIT_REPO" $target_dir
+    git clone --depth 1 "$JTL_REPO" $target_dir
 
     cd $target_dir
 
@@ -61,8 +61,8 @@ clone_and_setup_repo() {
     fi
 }
 
-if [ -z "$INITIAL_GIT_REPO" ]; then
-    echo "INITIAL_GIT_REPO is not set; not cloning anything"
+if [ -z "$JTL_REPO" ]; then
+    echo "JTL_REPO is not set; not cloning anything"
 else
     clone_and_setup_repo
 fi
