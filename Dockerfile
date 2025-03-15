@@ -67,19 +67,16 @@ RUN chown -R vscode /workspace
 RUN chown -R vscode /app/extensions
 RUN mkdir -p /home/vscode/.cache && chown -R vscode /home/vscode/.cache
 
-
 USER vscode
 
 RUN code-server --extensions-dir /app/extensions \
---install-extension /app/extensions/jtl-vscode-1.20250310.5.vsix \
+--install-extension /app/extensions/jtl-vscode-1.202500314.2.vsix \
 --install-extension "ms-python.python"  
 
 # --install-extension "ms-python.autopep8" \
 # --install-extension "ms-python.debugpy" \
 # --install-extension "ms-python.isort" \
 # --install-extension "ms-toolsai.jupyter" \
-
-
 
 WORKDIR /app/run
 
