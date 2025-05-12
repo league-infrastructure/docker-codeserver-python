@@ -17,7 +17,7 @@ services:
     environment:
       #- KST_REPORTING_URL=http://code-server/telem
       - KST_REPORTING_URL=http://192.168.1.49:5000/telem
-      - KST_REPORT_RATE=5
+      - KST_REPORT_INTERVAL=10
       - WORKSPACE_FOLDER=/workspace/Python-Apprentice
       - JTL_VNC_URL=https://codespace.doswarm.jointheleague.org/vnc/
       - JTL_REPO=https://github.com/league-curriculum/Python-Apprentice

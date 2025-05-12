@@ -14,7 +14,7 @@ ENV LEAGUE_CODESERVER=1 \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=C.UTF-8 \
     DISPLAY=:0.0 \
-    KST_REPORT_RATE=30 \
+    KST_REPORT_INTERVAL=10 \
     KST_DEBUG=0
 
 RUN curl -fsSL https://code-server.dev/install.sh | sh
