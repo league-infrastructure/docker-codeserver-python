@@ -1,7 +1,7 @@
 
 .PHONY: build push ver
 
-VERSION := "1.20250511.2"
+VERSION := "1.20250914.1"
 
 ver:
 	@echo $(VERSION)
@@ -13,5 +13,8 @@ push:
 	git push --tags
 
 build:
-	docker compose build --no-cache 
+	DOCKER_BUILDKIT=1  docker compose build 
+	docker tag docker-codeserver-python code-server-python:latest
+	docker tag code-server-python:latest code-server-python:$(VERSION)
+
 

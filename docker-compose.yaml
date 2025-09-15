@@ -3,7 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-
+      
+    image: docker-codeserver-python
     container_name: code-server
     
     ports:

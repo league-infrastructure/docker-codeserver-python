@@ -38,6 +38,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     imagemagick && \
     rm -rf /var/lib/apt/lists/*
 
+# Install rclone
+RUN curl -fsSL https://rclone.org/install.sh | bash
+
 ENV TZ=America/Los_Angeles
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -70,7 +73,7 @@ RUN mkdir -p /home/vscode/.cache && chown -R vscode /home/vscode/.cache
 USER vscode
 
 RUN code-server --extensions-dir /app/extensions \
---install-extension /app/extensions/jtl-syllabus-1.20250510.3.vsix \
+--install-extension /app/extensions/jtl-syllabus-1.20250618.1.vsix \
 --install-extension "ms-python.python"  
 
 # --install-extension "ms-python.autopep8" \
