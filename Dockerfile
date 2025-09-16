@@ -20,23 +20,25 @@ ENV LEAGUE_CODESERVER=1 \
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    x11-apps \
     git \
     bash \
     net-tools  netcat-traditional nmap \
     supervisor \
-    oneko \
     build-essential \
     cron \
     tzdata \
     procps \
     tini \
-    fluxbox \
-    novnc \
-    x11vnc \
-    xvfb \
-    imagemagick && \
-    rm -rf /var/lib/apt/lists/*
+    tigervnc-standalone-server tigervnc-tools \
+    dbus \
+    x11vnc xvfb  x11-xserver-utils fluxbox novnc \
+    imagemagick \
+    oneko  x11-apps \
+    && rm -rf /var/lib/apt/lists/*
+
+
+# Install desktop-lite, thich will duplicate some of the apt-get installs.
+RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/desktop-lite/install.sh | bash 
 
 # Install rclone
 RUN curl -fsSL https://rclone.org/install.sh | bash
@@ -57,7 +59,12 @@ RUN pip3 install --upgrade pip
 RUN pip3 --disable-pip-version-check --no-cache-dir install -r /app/requirements.txt 
 
 # Make novnc run from the index.html
-RUN cp /usr/share/novnc/vnc_lite.html  /usr/share/novnc/index.html
+
+# Disable VNC password requirement
+RUN mkdir -p /root/.vnc && echo "" > /root/.vnc/passwd && chmod 600 /root/.vnc/passwd
+
+# Also set up .vnc/passwd for vscode user
+RUN mkdir -p /home/vscode/.vnc && echo "" > /home/vscode/.vnc/passwd && chmod 600 /home/vscode/.vnc/passwd && chown -R vscode:vscode /home/vscode/.vnc
 
 EXPOSE 8080
 EXPOSE 6080
