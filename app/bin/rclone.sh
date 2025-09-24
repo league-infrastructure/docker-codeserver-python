@@ -1,6 +1,22 @@
 #!/bin/bash
 
-
+# Runs rclone to sync or copy data in or out to an S3 compatible object store.
+# This script is invoked by the code-spawner application when it calls back into
+# the container to perform the actual rclone operation.
+#
+# Usage: rclone.sh <copy|sync> <in|out>
+# Arguments:
+#   copy|sync: Specify the operation type.
+#   in: Sync from remote to local.
+#   out: Sync from local to remote.
+# Required Environment Variables:
+#   WORKSPACE_FOLDER: The workspace folder path.
+#   STORAGE_BUCKET: The storage bucket name.
+#   JTL_CLASS_ID: The JTL class ID.
+#   JTL_USERNAME: The JTL username.
+#   STORAGE_ENDPOINT: The storage endpoint URL.
+#   AWS_ACCESS_KEY_ID: AWS access key ID (required for env_auth=true).
+#   AWS_SECRET_ACCESS_KEY: AWS secret access key (required for env_auth=true).
 
 set -euo pipefail
 
@@ -29,19 +45,7 @@ REMOTE_KEY="${STORAGE_BUCKET}/class_${JTL_CLASS_ID}/${JTL_USERNAME}${WORKSPACE_F
 # Inline backend, credentials pulled from environment
 REMOTE_SPEC=":s3,provider=DigitalOcean,env_auth=true,endpoint=${ENDPOINT_HOST}:${REMOTE_KEY}"
 
-# Usage: rclone.sh <copy|sync> <in|out>
-# Arguments:
-#   copy|sync: Specify the operation type.
-#   in: Sync from remote to local.
-#   out: Sync from local to remote.
-# Required Environment Variables:
-#   WORKSPACE_FOLDER: The workspace folder path.
-#   STORAGE_BUCKET: The storage bucket name.
-#   JTL_CLASS_ID: The JTL class ID.
-#   JTL_USERNAME: The JTL username.
-#   STORAGE_ENDPOINT: The storage endpoint URL.
-#   AWS_ACCESS_KEY_ID: AWS access key ID (required for env_auth=true).
-#   AWS_SECRET_ACCESS_KEY: AWS secret access key (required for env_auth=true).
+
 
 # Check if two arguments are provided
 if [ $# -ne 2 ]; then
