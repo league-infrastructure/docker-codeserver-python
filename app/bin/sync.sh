@@ -13,4 +13,4 @@
 # First positional arg: action (sync_in, sync_out). Default: sync
 action="${1:-sync}"
 
-exec curl "$JTL_INTERNAL_CODESERVER_URL/host/$JTL_USERNAME/$action?host_uuid=$JTL_HOST_UUID"
+exec curl "$JTL_SPAWNER_URL/host/$JTL_USERNAME/$action?host_uuid=$JTL_HOST_UUID"
