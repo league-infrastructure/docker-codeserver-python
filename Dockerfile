@@ -38,7 +38,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 
 # Install desktop-lite, thich will duplicate some of the apt-get installs.
-RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/desktop-lite/install.sh | bash 
+# RUN curl https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/desktop-lite/install.sh | bash 
 
 # Install rclone
 RUN curl -fsSL https://rclone.org/install.sh | bash
@@ -67,6 +67,7 @@ RUN mkdir -p /root/.vnc && echo "" > /root/.vnc/passwd && chmod 600 /root/.vnc/p
 RUN mkdir -p /home/vscode/.vnc && echo "" > /home/vscode/.vnc/passwd && chmod 600 /home/vscode/.vnc/passwd && chown -R vscode:vscode /home/vscode/.vnc
 
 EXPOSE 8080
+EXPOSE 80 
 EXPOSE 6080
 
 RUN mkdir /app/run

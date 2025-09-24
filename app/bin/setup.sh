@@ -7,9 +7,10 @@ USER_DATA_DIR="$HOME/.local/share/code-server" # must match code-server.yaml
 
 echo "Setup.sh: Extra setup  "
 
-cd /workspace
+ mkdir -p /home/vscode/.config/rclone/
+ touch /home/vscode/.config/rclone/rclone.conf
 
-mkdir /workspace/User
+cd /workspace
 
 # The code.json file is used to configure the Coder IDE, but it
 # will also set the default workspace, which we don't want.
@@ -36,16 +37,27 @@ clone_and_setup_repo() {
     target_dir=$(basename "$JTL_REPO" .git)
 
     if [ -d "$target_dir" ]; then
-        echo "Repository already exists, pulling"
+        echo "Repository already exists, neither clone nor sync"
 
         cd $target_dir
-        #git pull -X ours
-
+   
         return 1
     fi
 
-    git clone --depth 1 "$JTL_REPO" $target_dir
+    SYNCED_OUTPUT=$(/app/bin/synced.sh)
+    if [ "$SYNCED_OUTPUT" = "false" ]; then
+        echo "Not synced, cloning repo $JTL_REPO to $target_dir ..."
+        git clone --depth 1 "$JTL_REPO" $target_dir
+        
+    else
+        echo "Prior sync, not cloning."
+        mkdir -p "$target_dir"
+        
+    fi
 
+    echo "Sync with remote store"
+    /app/bin/sync.sh
+    
     cd $target_dir
 
     # Find and run the repo setup script. 
