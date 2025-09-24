@@ -46,18 +46,15 @@ clone_and_setup_repo() {
 
     SYNCED_OUTPUT=$(/app/bin/synced.sh)
     if [ "$SYNCED_OUTPUT" = "false" ]; then
-        echo "Not synced, cloning repo $JTL_REPO to $target_dir ..."
+        echo "No prior sync, cloning repo $JTL_REPO to $target_dir and copy_out"
         git clone --depth 1 "$JTL_REPO" $target_dir
+         /app/bin/sync.sh sync_out
         
     else
-        echo "Prior sync, not cloning."
-        mkdir -p "$target_dir"
-        
+        echo "Prior sync, not cloning, copy in"
+        /app/bin/sync.sh sync_in
     fi
 
-    echo "Sync with remote store"
-    /app/bin/sync.sh
-    
     cd $target_dir
 
     # Find and run the repo setup script. 
