@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     x11vnc xvfb  x11-xserver-utils fluxbox novnc \
     imagemagick \
     oneko  x11-apps \
+    gh \
     && rm -rf /var/lib/apt/lists/*
 
 

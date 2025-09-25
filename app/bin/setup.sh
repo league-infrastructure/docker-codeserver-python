@@ -34,28 +34,19 @@ else
 fi
 
 clone_and_setup_repo() {
-    target_dir=$(basename "$JTL_REPO" .git)
+    target_dir=$WORKSPACE_FOLDER
+
 
     if [ -d "$target_dir" ]; then
-        echo "Repository already exists, neither clone nor sync"
-
+        echo "Repository exists, pulling latest changes in $target_dir"
         cd $target_dir
-   
-        return 1
-    fi
-
-    SYNCED_OUTPUT=$(/app/bin/synced.sh)
-    if [ "$SYNCED_OUTPUT" = "false" ]; then
-        echo "No prior sync, cloning repo $JTL_REPO to $target_dir and copy_out"
-        git clone --depth 1 "$JTL_REPO" $target_dir
-         /app/bin/sync.sh sync_out
-        
+        git pull
     else
-        echo "Prior sync, not cloning, copy in"
-        /app/bin/sync.sh sync_in
+        echo "Empty, cloning repo $JTL_REPO to $target_dir "
+        git clone --depth 1 "$JTL_REPO" $target_dir
+        cd $target_dir
     fi
 
-    cd $target_dir
 
     # Find and run the repo setup script. 
     if [ -z "$SETUP_SCRIPT" ]; then
