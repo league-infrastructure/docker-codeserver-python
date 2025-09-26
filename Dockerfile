@@ -52,9 +52,7 @@ COPY ./app /app
 
 
 
-# Copy the crontab file into the appropriate location
-RUN mv /app/crontab /etc/crontab
-RUN crontab /etc/crontab
+RUN crontab /app/crontab.root
 
 RUN pip3 install --upgrade pip
 RUN pip3 --disable-pip-version-check --no-cache-dir install -r /app/requirements.txt 
@@ -80,6 +78,8 @@ RUN chown -R vscode /app/extensions
 RUN mkdir -p /home/vscode/.cache && chown -R vscode /home/vscode/.cache
 
 USER vscode
+
+RUN crontab /app/crontab.vscode
 
 RUN code-server --extensions-dir /app/extensions \
 --install-extension /app/extensions/jtl-syllabus-1.20250618.1.vsix \

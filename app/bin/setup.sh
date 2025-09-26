@@ -67,4 +67,12 @@ else
     clone_and_setup_repo
 fi
 
+echo "Exporting environment variables for cron jobs to /app/env.sh"
+cat <<EOF > $HOME/env.sh
+export WORKSPACE_FOLDER="${WORKSPACE_FOLDER}"
+export JTL_SPAWNER_URL="${JTL_SPAWNER_URL}"
+export JTL_USERNAME="${JTL_USERNAME}"
+export JTL_HOST_UUID="${JTL_HOST_UUID}"
+EOF
+
 echo "Setup.sh finished"

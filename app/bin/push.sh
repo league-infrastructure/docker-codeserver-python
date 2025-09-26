@@ -1,4 +1,6 @@
+
 #!/bin/bash
+[ -f $HOME/env.sh ] && . $HOME/env.sh
 
 # Request the code spawner to call back into the container to push data to the repo.
 # This allows us to not have GITHUB credentials in the container.
