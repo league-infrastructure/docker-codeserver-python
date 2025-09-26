@@ -77,12 +77,19 @@ EOF
 
 
 if [ -f "${WORKSPACE_FOLDER}/.vscode/settings.json" ]; then
-    jq '. + {"python.defaultInterpreterPath": "/usr/local/bin/python3"}' "${WORKSPACE_FOLDER}/.vscode/settings.json" > "${WORKSPACE_FOLDER}/.vscode/settings.json.tmp" \
+    jq ". + $(< /app/vsc/workspace-settings.json)" "${WORKSPACE_FOLDER}/.vscode/settings.json" > "${WORKSPACE_FOLDER}/.vscode/settings.json.tmp" \
     && mv "${WORKSPACE_FOLDER}/.vscode/settings.json.tmp" "${WORKSPACE_FOLDER}/.vscode/settings.json"
 else
     mkdir -p "${WORKSPACE_FOLDER}/.vscode"
-    echo '{"python.defaultInterpreterPath": "/usr/local/bin/python3"}' > "${WORKSPACE_FOLDER}/.vscode/settings.json"
+    cp /app/vsc/workspace-settings.json "${WORKSPACE_FOLDER}/.vscode/settings.json"
 fi
+
+
+# Install the ipykernel for Jupyter support in VS Code
+python -m ipykernel install --user --name codehost --display-name "Python (League Code Host)"
+
+# Force all notebooks to prefer this kernel
+/app/bin/updateks.py codehost
 
 
 echo "Setup.sh finished"
