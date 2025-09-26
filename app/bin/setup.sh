@@ -75,4 +75,14 @@ export JTL_USERNAME="${JTL_USERNAME}"
 export JTL_HOST_UUID="${JTL_HOST_UUID}"
 EOF
 
+
+if [ -f "${WORKSPACE_FOLDER}/.vscode/settings.json" ]; then
+    jq '. + {"python.defaultInterpreterPath": "/usr/local/bin/python3"}' "${WORKSPACE_FOLDER}/.vscode/settings.json" > "${WORKSPACE_FOLDER}/.vscode/settings.json.tmp" \
+    && mv "${WORKSPACE_FOLDER}/.vscode/settings.json.tmp" "${WORKSPACE_FOLDER}/.vscode/settings.json"
+else
+    mkdir -p "${WORKSPACE_FOLDER}/.vscode"
+    echo '{"python.defaultInterpreterPath": "/usr/local/bin/python3"}' > "${WORKSPACE_FOLDER}/.vscode/settings.json"
+fi
+
+
 echo "Setup.sh finished"
