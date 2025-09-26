@@ -5,20 +5,13 @@
 
 USER_DATA_DIR="$HOME/.local/share/code-server" # must match code-server.yaml
 
-echo "Setup.sh: Extra setup  "
+echo "Setup.sh "
 
  mkdir -p /home/vscode/.config/rclone/
  touch /home/vscode/.config/rclone/rclone.conf
 
 cd /workspace
 
-# The code.json file is used to configure the Coder IDE, but it
-# will also set the default workspace, which we don't want.
-# Maybe would be better to edit out the default workspace part?
-if [ -f /workspace/coder.json ]; then
-    echo "Removing /workspace/coder.json ..."
-    rm /workspace/coder.json
-fi
 
 # Install the user configuration. Note that this is the User configuration
 # and that the repo may also have a custom workspace configuration
