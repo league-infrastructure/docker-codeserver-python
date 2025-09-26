@@ -79,11 +79,12 @@ USER vscode
 
 RUN code-server --extensions-dir /app/extensions \
 --install-extension /app/extensions/jtl-syllabus-1.20250618.1.vsix \
---install-extension "ms-python.python"  
---install-extension "ms-python.autopep8" \
---install-extension "ms-python.debugpy" \
---install-extension "ms-python.isort" \
---install-extension "ms-toolsai.jupyter" \
+--install-extension "ms-python.python"  \
+--install-extension "ms-toolsai.jupyter" 
+# --install-extension "ms-python.autopep8" \
+# --install-extension "ms-python.debugpy" \
+# --install-extension "ms-python.isort" \
+
 
 RUN mkdir -p /workspace/.vscode && \
     echo '{ "python.defaultInterpreterPath": "/usr/local/bin/python3" }' > /workspace/.vscode/settings.json
