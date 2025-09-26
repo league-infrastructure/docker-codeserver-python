@@ -50,9 +50,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY ./app /app
 
-
-
-RUN crontab /app/crontab.root
+RUN mv /app/crontab /etc/crontab
 
 RUN pip3 install --upgrade pip
 RUN pip3 --disable-pip-version-check --no-cache-dir install -r /app/requirements.txt 
@@ -79,16 +77,16 @@ RUN mkdir -p /home/vscode/.cache && chown -R vscode /home/vscode/.cache
 
 USER vscode
 
-RUN crontab /app/crontab.vscode
-
 RUN code-server --extensions-dir /app/extensions \
 --install-extension /app/extensions/jtl-syllabus-1.20250618.1.vsix \
 --install-extension "ms-python.python"  
+--install-extension "ms-python.autopep8" \
+--install-extension "ms-python.debugpy" \
+--install-extension "ms-python.isort" \
+--install-extension "ms-toolsai.jupyter" \
 
-# --install-extension "ms-python.autopep8" \
-# --install-extension "ms-python.debugpy" \
-# --install-extension "ms-python.isort" \
-# --install-extension "ms-toolsai.jupyter" \
+RUN mkdir -p /workspace/.vscode && \
+    echo '{ "python.defaultInterpreterPath": "/usr/local/bin/python3" }' > /workspace/.vscode/settings.json
 
 WORKDIR /app/run
 
