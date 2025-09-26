@@ -67,6 +67,7 @@ else
     clone_and_setup_repo
 fi
 
+# Export environment variables for cron jobs
 echo "Exporting environment variables for cron jobs to /app/env.sh"
 cat <<EOF > $HOME/env.sh
 export WORKSPACE_FOLDER="${WORKSPACE_FOLDER}"
@@ -76,6 +77,8 @@ export JTL_HOST_UUID="${JTL_HOST_UUID}"
 EOF
 
 
+# Inject our workspace settings into the workspace .vscode/settings.json. Some of these may
+# apply only to this docker image, so we can't just put them into the repo.
 if [ -f "${WORKSPACE_FOLDER}/.vscode/settings.json" ]; then
     jq ". + $(< /app/vsc/workspace-settings.json)" "${WORKSPACE_FOLDER}/.vscode/settings.json" > "${WORKSPACE_FOLDER}/.vscode/settings.json.tmp" \
     && mv "${WORKSPACE_FOLDER}/.vscode/settings.json.tmp" "${WORKSPACE_FOLDER}/.vscode/settings.json"
