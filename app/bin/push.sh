@@ -8,8 +8,9 @@
 cd "$WORKSPACE_FOLDER"
 git add -A
 if ! git diff --cached --quiet; then
+    echo "$(date) Changes detected; committing and pushing. "
 	git commit -m "Auto-commit: workspace changes before push"
 	curl "$JTL_SPAWNER_URL/host/$JTL_USERNAME/push?host_uuid=$JTL_HOST_UUID"
 else
-	echo "No changes to commit; skipping push."
+    echo "$(date) No changes to commit; skipping push. "
 fi
