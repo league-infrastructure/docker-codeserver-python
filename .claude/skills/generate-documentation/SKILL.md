@@ -1,0 +1,1 @@
+/Volumes/Proj/proj/league-projects/infrastructure/docker-codeserver-python/.agents/skills/generate-documentation/SKILL.md
