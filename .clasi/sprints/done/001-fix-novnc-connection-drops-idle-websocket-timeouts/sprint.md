@@ -1,7 +1,7 @@
 ---
 id: '001'
 title: Fix noVNC connection drops / idle WebSocket timeouts
-status: planning-docs
+status: done
 branch: sprint/001-fix-novnc-connection-drops-idle-websocket-timeouts
 use-cases:
 - UC-003
