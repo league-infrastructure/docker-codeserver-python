@@ -1,7 +1,9 @@
 
 .PHONY: build push ver
 
-VERSION := "1.20250926.4"
+# Single source of truth for the version is config/dotconfig.yaml.
+# Update it with `dotconfig version bump` (do not edit by hand).
+VERSION := $(shell awk '/^version:/ {print $$2}' config/dotconfig.yaml)
 
 ver:
 	@echo $(VERSION)
