@@ -1,7 +1,7 @@
 ---
 id: '003'
 title: Verify Caddy and edge idle-timeout handling
-status: in-progress
+status: done
 use-cases:
 - SUC-003
 depends-on:
