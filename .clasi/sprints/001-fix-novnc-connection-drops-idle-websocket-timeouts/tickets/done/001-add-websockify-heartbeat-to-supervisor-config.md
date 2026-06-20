@@ -1,7 +1,7 @@
 ---
 id: '001'
 title: Add websockify heartbeat to supervisor config
-status: in-progress
+status: done
 use-cases:
 - SUC-001
 depends-on: []

@@ -1,7 +1,7 @@
 ---
 id: '002'
 title: Add noVNC client auto-reconnect URL params
-status: in-progress
+status: done
 use-cases:
 - SUC-002
 depends-on: []
