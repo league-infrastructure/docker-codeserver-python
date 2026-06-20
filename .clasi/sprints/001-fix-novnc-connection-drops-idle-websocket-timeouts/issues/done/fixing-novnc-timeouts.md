@@ -1,8 +1,10 @@
 ---
 sprint: '001'
-status: in-progress
+status: done
 tickets:
 - 001-001
+- 001-002
+- 001-003
 ---
 # Fixing noVNC connection drops / timeouts
 

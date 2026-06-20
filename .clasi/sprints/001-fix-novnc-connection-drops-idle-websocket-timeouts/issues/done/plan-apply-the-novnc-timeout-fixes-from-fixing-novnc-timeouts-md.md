@@ -1,8 +1,10 @@
 ---
-status: in-progress
+status: done
 sprint: '001'
 tickets:
 - 001-001
+- 001-002
+- 001-003
 ---
 
 # Plan: Apply the noVNC timeout fixes from `fixing-novnc-timeouts.md`
