@@ -78,7 +78,7 @@ RUN mkdir -p /home/vscode/.cache && chown -R vscode /home/vscode/.cache
 USER vscode
 
 RUN code-server --extensions-dir /app/extensions \
---install-extension /app/extensions/jtl-syllabus-1.20250618.1.vsix \
+--install-extension /app/extensions/jtl-syllabus-1.20260626.1.vsix \
 --install-extension "ms-python.python"  \
 --install-extension "ms-toolsai.jupyter" 
 # --install-extension "ms-python.autopep8" \
