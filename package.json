@@ -1,5 +1,5 @@
 {
-  "version": "1.20260626.1",
+  "version": "1.20260626.2",
   "dependencies": {
     "wscat": "^6.1.0"
   }
