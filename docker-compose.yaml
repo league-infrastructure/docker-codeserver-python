@@ -37,6 +37,8 @@ services:
       # Make websockify route first
       caddy.0_route.handle: /websockify*
       caddy.0_route.handle.reverse_proxy: "@ws {{upstreams 6080}}"
+      # Keep established websockets open across Caddy config reloads
+      caddy.0_route.handle.reverse_proxy.stream_close_delay: 4h
       # VNC route second
       caddy.1_route.handle: /vnc/*
       caddy.1_route.handle_path: /vnc/*
@@ -44,6 +46,7 @@ services:
       # Catch-all route last
       caddy.2_route.handle: /*
       caddy.2_route.handle.reverse_proxy: "{{upstreams 80}}"
+      caddy.2_route.handle.reverse_proxy.stream_close_delay: 4h
 
       # Basic auth:
       #caddy.2_route.handle.basic_auth: admin
